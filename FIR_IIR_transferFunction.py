@@ -21,5 +21,3 @@ plt.xlabel('Frequency (Hz)')
 plt.ylabel('Magnitude')
 plt.grid(True)
 plt.show()
-
-print(w)
