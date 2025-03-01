@@ -30,16 +30,17 @@ frequencies = np.fft.fftfreq(N, d=1/sampling_frequency) #sampling happend here
 # print(frequencies)
 
 # Calculate the Power Spectral Density (PSD) manually
-PSD = np.abs(DFT) ** 2 / N**2
+PSD = np.abs(DFT) ** 2
 PSD[1:N//2 - 1] *= 2 # half of positive frequency, except DC and Nyquist
 
 # Normalize frequencies for plotting
 normalized_frequencies = frequencies / sampling_frequency
+normalized_frequencies[N//2] = np.abs(normalized_frequencies[N//2])
 
 # Plot the DFT magnitude
 plt.figure(figsize=(12, 6))
 plt.subplot(2, 1, 1)
-plt.semilogy(normalized_frequencies[1:N//2 - 1], np.abs(DFT[1:N//2 - 1])/ N *2)
+plt.semilogy(normalized_frequencies[:N//2], np.abs(DFT[:N//2])/ N *2)
 plt.title('DFT Magnitude with Normalized Frequency')
 plt.xlabel('Normalized Frequency')
 plt.ylabel('Magnitude (log scale)')
@@ -48,7 +49,7 @@ plt.xlim(0, 0.5)
 
 # Plot the PSD
 plt.subplot(2, 1, 2)
-plt.semilogy(normalized_frequencies[1:N//2 - 1], PSD[1:N//2 - 1])
+plt.semilogy(normalized_frequencies[:N//2], PSD[:N//2])
 plt.title('Power Spectral Density (PSD) with Normalized Frequency')
 plt.xlabel('Normalized Frequency')
 plt.ylabel('Power Spectral Density (log scale)')
